@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Canvas" Height="450" Width="800">
     <Canvas>
-        <Line X1="0" Y1="0" X2="200" Y2="200" Stroke="Navy"/>
+        <Line X1="0" Y1="0" X2="{Binding PosX}" Y2="{Binding Path=PosY}" Stroke="Navy" StrokeThickness="5"/>
+        <Ellipse Fill="Yellow" Stroke="Navy" StrokeThickness="5" Canvas.Left="150" Canvas.Top="150" Width="100" Height="100" />
     </Canvas>
 </Window>
