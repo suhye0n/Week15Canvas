@@ -37,8 +37,12 @@ namespace Week15Canvas
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string proportyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(proportyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(proportyName));
+        }
+
+        private void OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("마우스 버튼 클릭");
         }
     }
 }
