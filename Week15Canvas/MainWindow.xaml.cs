@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,69 +22,111 @@ namespace Week15Canvas
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        const double RADIUS = 50;
-        public double CenterX { get; set; }
-        public double CenterY { get; set; }
+        //const double RADIUS = 50;
 
+        //public double CenterX { get; set; }
+        //public double CenterY { get; set; }
+
+        // prop 탭 2번
         //public double PosX { get; set; }
         //public double PosY { get; set; }
 
-        public Point _pos;
+        // propfull 탭 2번
+        private Point _posZudah;
 
-        public Point Pos
+        public Point PosZudah
         {
-            get { return _pos; }
+            get { return _posZudah; }
             set
             {
-                _pos = value;
-                CenterX = _pos.X - RADIUS;
-                CenterY = _pos.Y - RADIUS;
-
-                OnPropertyChanged(nameof(Pos));
-                OnPropertyChanged(nameof(CenterX));
-                OnPropertyChanged(nameof(CenterY));
+                _posZudah = value;
+                //CenterX = _pos.X - RADIUS;
+                //CenterY = _pos.Y - RADIUS;
+                OnPropertyChanged("PosZudah");
+                //OnPropertyChanged("CenterX");
+                //OnPropertyChanged("CenterY");
             }
         }
+
+        private Point _posKampfer;
+
+        public Point PosKampfer
+        {
+            get { return _posKampfer; }
+            set
+            {
+                _posKampfer = value;
+                OnPropertyChanged("PosKampfer");
+            }
+        }
+
+        private Image? MovingImage = null;
+        private Boolean IsMoving = false;
+        private Point PosDiff = new Point(0, 0);
 
         public MainWindow()
         {
             InitializeComponent();
-
             DataContext = this;
-            //PosX = 200;
-            //PosY = 200;
-            Pos = new Point(200, 200);
+
+            PosZudah = new Point(200, 200);
+            PosKampfer = new Point(400, 200);
         }
 
-        private Boolean IsMoving = false;
-
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string proportyName)
+        private void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(proportyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            //MessageBox.Show("마우스 버튼 클릭");
-
-            //PosX = e.GetPosition(this).X;
-            //PosY = e.GetPosition(this).Y;
-            //OnPropertyChanged(nameof(PosX));
-            //OnPropertyChanged("PosY");
-
+            MovingImage = (Image)sender;
             IsMoving = true;
-        }
 
+            PosDiff = e.GetPosition(MovingImage);
+        }
         private void OnMouseUp(object sender, MouseButtonEventArgs e)
         {
+            MovingImage = null;
             IsMoving = false;
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (IsMoving)
-                Pos = e.GetPosition(this);
+            if (!IsMoving)
+                return;
+
+            Point p = new Point(
+                e.GetPosition(this).X + Center.RADIUS - PosDiff.X,
+                e.GetPosition(this).Y + Center.RADIUS - PosDiff.Y);
+
+            switch (MovingImage?.Name)
+            {
+                case "Zudah":
+                    PosZudah = p;
+                    break;
+                case "Kampfer":
+                    PosKampfer = p;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public class Center : IValueConverter
+    {
+        public const double RADIUS = 50;
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (double)value - RADIUS;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (double)value + RADIUS;
         }
     }
 }

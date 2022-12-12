@@ -6,8 +6,95 @@
         xmlns:local="clr-namespace:Week15Canvas"
         mc:Ignorable="d"
         Title="Canvas" Height="450" Width="800">
-    <Canvas Background="Beige" MouseMove="OnMouseMove">
-        <Line X1="0" Y1="0" X2="{Binding Pos.X}" Y2="{Binding Path=Pos.Y}" Stroke="Navy" StrokeThickness="5"/>
-        <Ellipse MouseDown="OnMouseDown" MouseUp="OnMouseUp" Fill="Yellow" Stroke="Navy" StrokeThickness="5" Canvas.Left="{Binding CenterX}" Canvas.Top="{Binding CenterY}" Width="100" Height="100" />
+    <Window.Resources>
+        <local:Center x:Key="Center"/>
+    </Window.Resources>
+    <Canvas 
+        Background="Beige" 
+        MouseMove="OnMouseMove">
+        <!--<Line 
+            X1="0" Y1="0"
+            X2="{ Binding Path=Pos.X }"
+            Y2="{ Binding Pos.Y }"
+            Stroke="Navy"
+            StrokeThickness="5"/>-->
+        <!--<Ellipse
+            x:Name="Circle"
+            Fill="Yellow"
+            Stroke="Navy"
+            StrokeThickness="5"
+            Canvas.Left="{ Binding Pos.X, Converter={StaticResource Center}  }"
+            Canvas.Top="{ Binding Pos.Y, Converter={StaticResource Center}  }"
+            Width="100"
+            Height="100"
+            MouseDown="OnMouseDown"
+            MouseUp="OnMouseUp"/>-->
+        <Image
+            x:Name="Zudah"
+            Panel.ZIndex="1"
+            Width="100"
+            Height="100"
+            Canvas.Left="{ Binding PosZudah.X, Converter={StaticResource Center}  }"
+            Canvas.Top="{ Binding PosZudah.Y, Converter={StaticResource Center}  }"
+            Source="./images/zudah.jpg"
+            
+            MouseDown="OnMouseDown"
+            MouseUp="OnMouseUp">
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Image.MouseDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="Opacity"
+                                From="1" To="0.6"
+                                Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Image.MouseUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.6" To="1"
+                                Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+        </Image>
+        <Image
+            x:Name="Kampfer"
+            Width="100"
+            Height="100"
+            Canvas.Left="{ Binding PosKampfer.X, Converter={StaticResource Center}  }"
+            Canvas.Top="{ Binding PosKampfer.Y, Converter={StaticResource Center}  }"
+            Source="./images/kampfer.jpg"
+            
+            MouseDown="OnMouseDown"
+            MouseUp="OnMouseUp">
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Image.MouseDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="Opacity"
+                                From="1" To="0.6"
+                                Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Image.MouseUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.6" To="1"
+                                Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+        </Image>
     </Canvas>
 </Window>
