@@ -21,17 +21,29 @@ namespace Week15Canvas
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public double PosX { get; set; }
-        public double PosY { get; set; }
+        //public double PosX { get; set; }
+        //public double PosY { get; set; }
 
+        public Point _pos;
+
+        public Point Pos
+        {
+            get { return _pos; }
+            set
+            {
+                _pos = value;
+                OnPropertyChanged(nameof(Pos));
+            }
+        }
 
         public MainWindow()
         {
             InitializeComponent();
 
             DataContext = this;
-            PosX = 200;
-            PosY = 200;
+            //PosX = 200;
+            //PosY = 200;
+            Pos = new Point(200, 200);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -42,7 +54,14 @@ namespace Week15Canvas
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("마우스 버튼 클릭");
+            //MessageBox.Show("마우스 버튼 클릭");
+
+            //PosX = e.GetPosition(this).X;
+            //PosY = e.GetPosition(this).Y;
+            //OnPropertyChanged(nameof(PosX));
+            //OnPropertyChanged("PosY");
+
+            Pos = e.GetPosition(this);
         }
     }
 }
