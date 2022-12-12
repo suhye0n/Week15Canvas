@@ -21,6 +21,10 @@ namespace Week15Canvas
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        const double RADIUS = 50;
+        public double CenterX { get; set; }
+        public double CenterY { get; set; }
+
         //public double PosX { get; set; }
         //public double PosY { get; set; }
 
@@ -32,7 +36,12 @@ namespace Week15Canvas
             set
             {
                 _pos = value;
+                CenterX = _pos.X - RADIUS;
+                CenterY = _pos.Y - RADIUS;
+
                 OnPropertyChanged(nameof(Pos));
+                OnPropertyChanged(nameof(CenterX));
+                OnPropertyChanged(nameof(CenterY));
             }
         }
 
@@ -45,6 +54,8 @@ namespace Week15Canvas
             //PosY = 200;
             Pos = new Point(200, 200);
         }
+
+        private Boolean IsMoving = false;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string proportyName)
@@ -61,7 +72,18 @@ namespace Week15Canvas
             //OnPropertyChanged(nameof(PosX));
             //OnPropertyChanged("PosY");
 
-            Pos = e.GetPosition(this);
+            IsMoving = true;
+        }
+
+        private void OnMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            IsMoving = false;
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (IsMoving)
+                Pos = e.GetPosition(this);
         }
     }
 }

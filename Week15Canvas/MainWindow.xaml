@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Week15Canvas"
         mc:Ignorable="d"
         Title="Canvas" Height="450" Width="800">
-    <Canvas Background="Beige" MouseDown="OnMouseDown">
+    <Canvas Background="Beige" MouseMove="OnMouseMove">
         <Line X1="0" Y1="0" X2="{Binding Pos.X}" Y2="{Binding Path=Pos.Y}" Stroke="Navy" StrokeThickness="5"/>
-        <Ellipse Fill="Yellow" Stroke="Navy" StrokeThickness="5" Canvas.Left="150" Canvas.Top="150" Width="100" Height="100" />
+        <Ellipse MouseDown="OnMouseDown" MouseUp="OnMouseUp" Fill="Yellow" Stroke="Navy" StrokeThickness="5" Canvas.Left="{Binding CenterX}" Canvas.Top="{Binding CenterY}" Width="100" Height="100" />
     </Canvas>
 </Window>
