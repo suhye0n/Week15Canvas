@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Week15Canvas"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Canvas" Height="450" Width="800">
+    <Canvas>
+        <Line X1="0" Y1="0" X2="200" Y2="200" Stroke="Navy"/>
+    </Canvas>
 </Window>
